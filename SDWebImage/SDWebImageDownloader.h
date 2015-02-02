@@ -50,7 +50,11 @@ typedef NS_OPTIONS(NSUInteger, SDWebImageDownloaderOptions) {
      */
     SDWebImageDownloaderHighPriority = 1 << 7,
     
-
+    /**
+     * Ignore image decode
+     * 下载图片生成的UIImage对象不解压
+     */
+    SDWebImageDownloaderIgnoreImageDecompress = 1 << 8,
 };
 
 typedef NS_ENUM(NSInteger, SDWebImageDownloaderExecutionOrder) {

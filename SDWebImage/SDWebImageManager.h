@@ -82,6 +82,21 @@ typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) {
      * Use this flag to transform them anyway.
      */
     SDWebImageTransformAnimatedImage = 1 << 10,
+    
+    /**
+     * 有缓存加载缓存，不下载，适用于非wifi不下载图片模式
+     */
+    SDWebImageLoadFromCacheWithoutDownload = 1 << 11,
+    
+    /**
+     * 下载图片生成的UIImage对象不解压
+     */
+    SDWebImageIgnoreDecompress = 1 << 12,
+    
+    /**
+     * This flag disables mem caching
+     */
+    SDWebImageDisableMemCache = 1 << 13,
 };
 
 typedef void(^SDWebImageCompletionBlock)(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL);

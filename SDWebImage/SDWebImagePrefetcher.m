@@ -39,7 +39,7 @@
 - (id)init {
     if ((self = [super init])) {
         _manager = [SDWebImageManager new];
-        _options = SDWebImageLowPriority;
+        _options = SDWebImageLowPriority | SDWebImageIgnoreDecompress | SDWebImageDisableMemCache;
         self.maxConcurrentDownloads = 3;
     }
     return self;

@@ -144,12 +144,14 @@ BOOL ImageDataHasPNGPreffix(NSData *data) {
 
 #pragma mark ImageCache
 
-- (void)storeImage:(UIImage *)image recalculateFromImage:(BOOL)recalculate imageData:(NSData *)imageData forKey:(NSString *)key toDisk:(BOOL)toDisk {
+- (void)storeImage:(UIImage *)image recalculateFromImage:(BOOL)recalculate imageData:(NSData *)imageData forKey:(NSString *)key toDisk:(BOOL)toDisk toMem:(BOOL)toMem {
     if (!image || !key) {
         return;
     }
 
-    [self.memCache setObject:image forKey:key cost:image.size.height * image.size.width * image.scale * image.scale];
+    if (toMem) {
+        [self.memCache setObject:image forKey:key cost:image.size.height * image.size.width * image.scale * image.scale];
+    }
 
     if (toDisk) {
         dispatch_async(self.ioQueue, ^{
@@ -193,12 +195,16 @@ BOOL ImageDataHasPNGPreffix(NSData *data) {
     }
 }
 
+- (void)storeImage:(UIImage *)image recalculateFromImage:(BOOL)recalculate imageData:(NSData *)imageData forKey:(NSString *)key toDisk:(BOOL)toDisk {
+    [self storeImage:image recalculateFromImage:recalculate imageData:imageData forKey:key toDisk:toDisk toMem:YES];
+}
+
 - (void)storeImage:(UIImage *)image forKey:(NSString *)key {
     [self storeImage:image recalculateFromImage:YES imageData:nil forKey:key toDisk:YES];
 }
 
 - (void)storeImage:(UIImage *)image forKey:(NSString *)key toDisk:(BOOL)toDisk {
-    [self storeImage:image recalculateFromImage:YES imageData:nil forKey:key toDisk:toDisk];
+    [self storeImage:image recalculateFromImage:YES imageData:nil forKey:key toDisk:toDisk toMem:YES];
 }
 
 - (BOOL)diskImageExistsWithKey:(NSString *)key {

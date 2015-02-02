@@ -364,7 +364,7 @@
             image = [self scaledImageForKey:key image:image];
             
             // Do not force decoding animated GIFs
-            if (!image.images) {
+            if (!image.images && !(self.options & SDWebImageDownloaderIgnoreImageDecompress)) {
                 image = [UIImage decodedImageWithImage:image];
             }
             if (CGSizeEqualToSize(image.size, CGSizeZero)) {
